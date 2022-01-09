@@ -103,6 +103,7 @@ data "aws_ami" "amazon-2" {
   }
   owners = ["amazon"]
 }
+
 module "bastion" {
   source = "git@github.com:kiawnna/terraform-aws-ec2-instance.git"
   ami_id = data.aws_ami.amazon-2.id
@@ -111,5 +112,3 @@ module "bastion" {
   subnet_id = module.network.public_subnet_id1
   security_group_ids = [module.baston_security_group.security_group_id]
 }
-
-## Each application would need a target group and route 53.
