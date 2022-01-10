@@ -26,7 +26,7 @@ module "ec2_security_group" {
       from_port = 0
       to_port = 0
       protocol = "-1"
-      security_groups = [module.baston_security_group.security_group_id]
+      security_groups = [module.bastion_security_group.security_group_id]
     }]
   egress_rules = [
     {
@@ -68,7 +68,7 @@ module "load_balancer_security_group" {
     }]
 }
 
-module "baston_security_group" {
+module "bastion_security_group" {
   source = "git@github.com:kiawnna/terraform-aws-security-group.git"
   environment = var.environment
   vpc_id = module.network.vpc_id
@@ -110,5 +110,5 @@ module "bastion" {
   key_pair = var.key_pair
   environment = var.environment
   subnet_id = module.network.public_subnet_id1
-  security_group_ids = [module.baston_security_group.security_group_id]
+  security_group_ids = [module.bastion_security_group.security_group_id]
 }
