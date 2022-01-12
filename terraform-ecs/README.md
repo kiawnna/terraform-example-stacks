@@ -22,6 +22,8 @@ launch. These resources include:
         * One for the bastion instance, which allows only SSH traffic
         * One for the load balancer, which allows traffic over port 443 and port 80
         * One for the private EC2 instances, which allows traffic from the load balancer and bastion's security groups
+        * One for the ECS services, which allows traffic from the load balancer's security group
+
     
 * Load-balancing resources
     - Application load balancer
