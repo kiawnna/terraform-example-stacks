@@ -1,5 +1,5 @@
 module "task_definition" {
-  source = "../../terraform-aws-task-definition"
+  source = "git@github.com:kiawnna/terraform-aws-task-definition.git"
   for_each = var.applications
 
   app_name = each.value.app_name
@@ -37,7 +37,7 @@ module "target_group" {
   health_check_interval = 120
 }
 module "service" {
-  source = "../../terraform-aws-ecs-service"
+  source = "git@github.com:kiawnna/terraform-aws-ecs-service.git"
   for_each = var.applications
 
   container_name = "${each.value.app_name}-${var.environment}"
