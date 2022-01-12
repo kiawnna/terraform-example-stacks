@@ -45,7 +45,7 @@ module "load_balancer_security_group" {
   security_group_name = "${var.environment}-load-balancer-sg"
   ingress_rules = [
     {
-      description = "Allow all traffic from internet"
+      description = "Allow insecure traffic from internet"
       from_port = 80
       to_port = 80
       protocol = "tcp"
@@ -80,6 +80,29 @@ module "bastion_security_group" {
       to_port = 22
       protocol = "tcp"
       cidr_block = "0.0.0.0/0"
+    }]
+  egress_rules = [
+    {
+      description = "Allow all outbound traffic."
+      from_port = 0
+      to_port = 0
+      protocol = "-1"
+      cidr_block = "0.0.0.0/0"
+    }]
+}
+
+module "ecs_services_security_group" {
+  source = "git@github.com:kiawnna/terraform-aws-security-group.git"
+  environment = var.environment
+  vpc_id = module.network.vpc_id
+  security_group_name = "${var.environment}-ecs-services-sg"
+  sg_ingress_rules = [
+    {
+      description = "Allow traffic from load balancer."
+      from_port = 0
+      to_port = 0
+      protocol = "tcp"
+      security_groups = [module.load_balancer_security_group.security_group_id]
     }]
   egress_rules = [
     {
