@@ -6,7 +6,7 @@ The variables in `dev.tfvars` are the only required variables needed to launch t
 
 Below is a diagram of the infrastructure that will be deployed into your account:
 
-![ECS Stack](/terraform-example-stacks/terraform-ecs/ECS_Stack_Diagram.png)
+![ECS Stack](/terraform-ecs/ECS_Stack_Diagram.png)
 
 ## Shared resources
 Shared resources are resources that will only be deployed once per environment and are shared amongst the applications you
