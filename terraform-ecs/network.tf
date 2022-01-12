@@ -1,8 +1,3 @@
-provider "aws" {
- version = "~> 3.71.0"
- region  = var.region
-}
-
 module "network" {
   source = "git@github.com:kiawnna/terraform-aws-network.git"
   environment = var.environment
@@ -12,7 +7,7 @@ module "ec2_security_group" {
   source = "git@github.com:kiawnna/terraform-aws-security-group.git"
   environment = var.environment
   vpc_id = module.network.vpc_id
-  security_group_name = "${var.environment}-ec2-sg"
+  security_group_name = "dev-ec2-sg"
   sg_ingress_rules = [
     {
       description = "Allow traffic from load balancer security group."
@@ -42,7 +37,7 @@ module "load_balancer_security_group" {
   source = "git@github.com:kiawnna/terraform-aws-security-group.git"
   environment = var.environment
   vpc_id = module.network.vpc_id
-  security_group_name = "${var.environment}-load-balancer-sg"
+  security_group_name = "dev-load-balancer-sg"
   ingress_rules = [
     {
       description = "Allow insecure traffic from internet"
@@ -72,7 +67,7 @@ module "bastion_security_group" {
   source = "git@github.com:kiawnna/terraform-aws-security-group.git"
   environment = var.environment
   vpc_id = module.network.vpc_id
-  security_group_name = "${var.environment}-bastion-sg"
+  security_group_name = "dev-bastion-sg"
   ingress_rules = [
     {
       description = "Allow SSH traffic from my anywhere."
@@ -95,13 +90,13 @@ module "ecs_services_security_group" {
   source = "git@github.com:kiawnna/terraform-aws-security-group.git"
   environment = var.environment
   vpc_id = module.network.vpc_id
-  security_group_name = "${var.environment}-ecs-services-sg"
+  security_group_name = "dev-ecs-services-sg"
   sg_ingress_rules = [
     {
       description = "Allow traffic from load balancer."
       from_port = 0
       to_port = 0
-      protocol = "tcp"
+      protocol = "-1"
       security_groups = [module.load_balancer_security_group.security_group_id]
     }]
   egress_rules = [

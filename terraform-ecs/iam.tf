@@ -37,13 +37,13 @@ data "aws_iam_policy_document" "task_execution_policy" {
 module "task_role" {
   source = "../../terraform-aws-iam-role"
   service = "ecs-tasks.amazonaws.com"
-  policy = data.aws_iam_policy_document.task_execution_policy.json
+  policy = data.aws_iam_policy_document.task_policy.json
   role_name = "task-role-${var.environment}"
   environment = var.environment
   managed_policies_list = []
 }
 
-data "aws_iam_policy_document" "task_execution_policy" {
+data "aws_iam_policy_document" "task_policy" {
   statement {
     effect = "Allow"
     actions = [
@@ -58,13 +58,13 @@ data "aws_iam_policy_document" "task_execution_policy" {
 module "ecs_host_role" {
   source = "../../terraform-aws-iam-role"
   service = "ec2.amazonaws.com"
-  policy = data.aws_iam_policy_document.task_execution_policy.json
+  policy = data.aws_iam_policy_document.ecs_host_policy.json
   role_name = "ecs-host-role-${var.environment}"
   environment = var.environment
   managed_policies_list = []
 }
 
-data "aws_iam_policy_document" "task_execution_policy" {
+data "aws_iam_policy_document" "ecs_host_policy" {
   statement {
     effect = "Allow"
     actions = [
