@@ -7,7 +7,7 @@ module "ec2_security_group" {
   source = "git@github.com:kiawnna/terraform-aws-security-group.git"
   environment = var.environment
   vpc_id = module.network.vpc_id
-  security_group_name = "dev-ec2-sg"
+  security_group_name = "ec2-sg"
   sg_ingress_rules = [
     {
       description = "Allow traffic from load balancer security group."
@@ -37,7 +37,7 @@ module "load_balancer_security_group" {
   source = "git@github.com:kiawnna/terraform-aws-security-group.git"
   environment = var.environment
   vpc_id = module.network.vpc_id
-  security_group_name = "dev-load-balancer-sg"
+  security_group_name = "load-balancer-sg"
   ingress_rules = [
     {
       description = "Allow insecure traffic from internet"
@@ -67,7 +67,7 @@ module "bastion_security_group" {
   source = "git@github.com:kiawnna/terraform-aws-security-group.git"
   environment = var.environment
   vpc_id = module.network.vpc_id
-  security_group_name = "dev-bastion-sg"
+  security_group_name = "bastion-sg"
   ingress_rules = [
     {
       description = "Allow SSH traffic from my anywhere."
@@ -90,7 +90,7 @@ module "ecs_services_security_group" {
   source = "git@github.com:kiawnna/terraform-aws-security-group.git"
   environment = var.environment
   vpc_id = module.network.vpc_id
-  security_group_name = "dev-ecs-services-sg"
+  security_group_name = "ecs-services-sg"
   sg_ingress_rules = [
     {
       description = "Allow traffic from load balancer."
